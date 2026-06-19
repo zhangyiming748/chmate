@@ -17,6 +17,11 @@ var (
 	createTime string
 	accessTime string
 	modifyTime string
+
+	// 版本信息（通过 ldflags 注入）
+	version   = "dev"
+	buildTime = "unknown"
+	gitCommit = "unknown"
 )
 
 // 使用cobra实现chmate的命令行工具 chmate 的参数包括 -d --dir 文件所在目录的路径 -ct --create-time 创建时间 -at --access-time 访问时间 -mt --modify-time 修改时间
@@ -26,8 +31,9 @@ var (
 // 就代表将 "C:\Users\Username\Documents" 目录下的所有文件的创建时间修改为 2023 年 1 月 1 日 12:00:00
 
 var rootCmd = &cobra.Command{
-	Use:   "chmate",
-	Short: "修改文件元数据时间的命令行工具",
+	Use:     "chmate",
+	Short:   "修改文件元数据时间的命令行工具",
+	Version: version, // 支持 -v/--version 标志
 	Long: `chmate 是一个跨平台的文件元数据时间修改工具。
 
 支持修改文件的创建时间、访问时间和修改时间。
@@ -118,7 +124,22 @@ Windows 平台支持修改所有时间，Linux/macOS 仅支持修改访问和修
 	},
 }
 
+// versionCmd 版本信息子命令
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "显示版本信息",
+	Long:  "显示 chmate 的版本号、构建时间和 Git 提交信息",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("chmate version %s\n", version)
+		fmt.Printf("Build Time: %s\n", buildTime)
+		fmt.Printf("Git Commit: %s\n", gitCommit)
+	},
+}
+
 func init() {
+	// 注册 version 子命令
+	rootCmd.AddCommand(versionCmd)
+
 	// 定义命令行参数
 	rootCmd.Flags().StringVarP(&dirPath, "dir", "d", "", "文件所在目录的路径 (必填)")
 	rootCmd.Flags().StringVarP(&createTime, "create-time", "c", "", "创建时间，格式: yyyymmddhhmmss，例如: 20230101120000 (必填)")

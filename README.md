@@ -9,6 +9,32 @@
 - 🎯 简单易用的命令行界面
 - 🔍 查看和修改文件时间信息
 
+## 📥 快速下载
+
+### 从 GitHub Releases 下载
+
+|平台|架构|下载链接|
+|:---:|:---:|:---:|
+|Linux|amd64|[chmate_linux_amd64](https://github.com/yourusername/chmate/releases/latest/download/chmate_linux_amd64)|
+|Linux|arm64|[chmate_linux_arm64](https://github.com/yourusername/chmate/releases/latest/download/chmate_linux_arm64)|
+|macOS|amd64|[chmate_darwin_amd64](https://github.com/yourusername/chmate/releases/latest/download/chmate_darwin_amd64)|
+|macOS|arm64(AppleSilicon)|[chmate_darwin_arm64](https://github.com/yourusername/chmate/releases/latest/download/chmate_darwin_arm64)|
+|Windows|amd64|[chmate_windows_amd64.exe](https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_amd64.exe)|
+|Windows|arm64|[chmate_windows_arm64.exe](https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_arm64.exe)|
+
+**一键下载命令：**
+
+```bash
+# Linux/macOS
+wget https://github.com/yourusername/chmate/releases/latest/download/chmate_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') -O chmate && chmod +x chmate
+
+# Windows PowerShell (amd64)
+Invoke-WebRequest -Uri "https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_amd64.exe" -OutFile "chmate.exe"
+
+# Windows PowerShell (arm64)
+Invoke-WebRequest -Uri "https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_arm64.exe" -OutFile "chmate.exe"
+```
+
 ## 安装
 
 ```bash
@@ -29,10 +55,15 @@ go build -o chmate.exe
 
 ```
 -d, --dir              文件所在目录的路径 (必填)
--c, --create-time      创建时间，格式: 2006-01-02 15:04:05 (必填)
--a, --access-time      访问时间，格式: 2006-01-02 15:04:05 (可选，默认为创建时间)
--m, --modify-time      修改时间，格式: 2006-01-02 15:04:05 (可选，默认为创建时间)
+-c, --create-time      创建时间，格式: yyyymmddhhmmss (必填)
+-a, --access-time      访问时间，格式: yyyymmddhhmmss (可选，默认为创建时间)
+-m, --modify-time      修改时间，格式: yyyymmddhhmmss (可选，默认为创建时间)
 ```
+
+**时间格式说明：**
+- 格式：`yyyymmddhhmmss`（年月日时分秒，无分隔符）
+- 示例：`20230101120000` 表示 2023年1月1日 12:00:00
+- 示例：`20240520103000` 表示 2024年5月20日 10:30:00
 
 ### 1. 基本用法 - 批量修改目录下所有文件的时间
 
@@ -40,8 +71,8 @@ go build -o chmate.exe
 # 只指定创建时间，访问时间和修改时间自动与创建时间相同
 chmate -d <目录路径> -c "<创建时间>"
 
-# 示例：将 testdir 目录下所有文件的三个时间都设置为 2024-05-20 10:30:00
-chmate -d testdir -c "2024-05-20 10:30:00"
+# 示例：将 testdir 目录下所有文件的三个时间都设置为 2023年1月1日 12:00:00
+chmate -d testdir -c "20230101120000"
 ```
 
 ### 2. 分别设置不同的时间
@@ -51,7 +82,7 @@ chmate -d testdir -c "2024-05-20 10:30:00"
 chmate -d <目录路径> -c "<创建时间>" -a "<访问时间>" -m "<修改时间>"
 
 # 示例：
-chmate -d testdir -c "2024-01-01 08:00:00" -a "2024-06-15 12:30:00" -m "2024-12-31 23:59:59"
+chmate -d testdir -c "20230101080000" -a "20230615123000" -m "20231231235959"
 ```
 
 ### 3. 查看帮助信息
@@ -71,24 +102,45 @@ Usage:
   chmate [flags]
 
 Flags:
-  -a, --access-time string   访问时间，格式: 2006-01-02 15:04:05 (可选，默认为创建时间)
-  -c, --create-time string   创建时间，格式: 2006-01-02 15:04:05 (必填)
+  -a, --access-time string   访问时间，格式: yyyymmddhhmmss，例如: 20230101120000 (可选，默认为创建时间)
+  -c, --create-time string   创建时间，格式: yyyymmddhhmmss，例如: 20230101120000 (必填)
   -d, --dir string           文件所在目录的路径 (必填)
   -h, --help                 help for chmate
-  -m, --modify-time string   修改时间，格式: 2006-01-02 15:04:05 (可选，默认为创建时间)
+  -m, --modify-time string   修改时间，格式: yyyymmddhhmmss，例如: 20230101120000 (可选，默认为创建时间)
+  -v, --version              version for chmate
 ```
 
-### 4. 使用示例
+### 3. 查看版本信息
+
+```bash
+# 使用短标志
+chmate -v
+
+# 使用长标志
+chmate --version
+
+# 使用子命令（显示更详细信息）
+chmate version
+```
+
+输出示例：
+```
+chmate version v1.0.0
+Build Time: 2024-01-01T12:00:00Z
+Git Commit: abc123def456...
+```
+
+### 5. 使用示例
 
 ```bash
 # 修改单个目录下所有文件的时间
-chmate -d ./photos -c "2024-01-01 12:00:00"
+chmate -d ./photos -c "20230101120000"
 
 # 修改并分别设置三个时间
-chmate -d ./documents -c "2024-01-01 08:00:00" -a "2024-06-15 12:00:00" -m "2024-12-31 23:59:59"
+chmate -d ./documents -c "20230101080000" -a "20230615120000" -m "20231231235959"
 
 # 使用完整参数名
-chmate --dir ./backup --create-time "2024-05-20 10:30:00"
+chmate --dir ./backup --create-time "20230520103000"
 ```
 
 ## 技术实现
