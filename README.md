@@ -15,31 +15,31 @@
 
 |平台|架构|下载链接|
 |:---:|:---:|:---:|
-|Linux|amd64|[chmate_linux_amd64](https://github.com/yourusername/chmate/releases/latest/download/chmate_linux_amd64)|
-|Linux|arm64|[chmate_linux_arm64](https://github.com/yourusername/chmate/releases/latest/download/chmate_linux_arm64)|
-|macOS|amd64|[chmate_darwin_amd64](https://github.com/yourusername/chmate/releases/latest/download/chmate_darwin_amd64)|
-|macOS|arm64(AppleSilicon)|[chmate_darwin_arm64](https://github.com/yourusername/chmate/releases/latest/download/chmate_darwin_arm64)|
-|Windows|amd64|[chmate_windows_amd64.exe](https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_amd64.exe)|
-|Windows|arm64|[chmate_windows_arm64.exe](https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_arm64.exe)|
+|Linux|amd64|[chmate_linux_amd64](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_linux_amd64)|
+|Linux|arm64|[chmate_linux_arm64](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_linux_arm64)|
+|macOS|amd64|[chmate_darwin_amd64](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_darwin_amd64)|
+|macOS|arm64(AppleSilicon)|[chmate_darwin_arm64](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_darwin_arm64)|
+|Windows|amd64|[chmate_windows_amd64.exe](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_windows_amd64.exe)|
+|Windows|arm64|[chmate_windows_arm64.exe](https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_windows_arm64.exe)|
 
 **一键下载命令：**
 
 ```bash
 # Linux/macOS
-wget https://github.com/yourusername/chmate/releases/latest/download/chmate_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') -O chmate && chmod +x chmate
+wget https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') -O chmate && chmod +x chmate
 
 # Windows PowerShell (amd64)
-Invoke-WebRequest -Uri "https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_amd64.exe" -OutFile "chmate.exe"
+Invoke-WebRequest -Uri "https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_windows_amd64.exe" -OutFile "chmate.exe"
 
 # Windows PowerShell (arm64)
-Invoke-WebRequest -Uri "https://github.com/yourusername/chmate/releases/latest/download/chmate_windows_arm64.exe" -OutFile "chmate.exe"
+Invoke-WebRequest -Uri "https://github.com/zhangyiming748/chmate/releases/latest/download/chmate_windows_arm64.exe" -OutFile "chmate.exe"
 ```
 
 ## 安装
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/chmate.git
+git clone https://github.com/zhangyiming748/chmate.git
 cd chmate
 
 # 编译
