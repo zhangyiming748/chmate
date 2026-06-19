@@ -1,1 +1,25 @@
-chmate.exe
+# 编译产物
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go 测试覆盖率
+*.cover
+*.out
+
+# 依赖目录
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
